@@ -18,7 +18,7 @@ import br.com.rodrigodoe.zupbank.utils.ClientConverterUtils;
 public class ClientService {
 
 	@Autowired
-	ClientRepository clientRepository;
+	private ClientRepository clientRepository;
 
 	public ClientDTO create(ClientDTO clientDto) {
 

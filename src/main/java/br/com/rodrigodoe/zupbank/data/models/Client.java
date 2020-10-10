@@ -2,11 +2,14 @@ package br.com.rodrigodoe.zupbank.data.models;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -28,7 +31,18 @@ public class Client {
 	@Column(nullable = false)
 	private String cpf;
 	
+	@OneToOne(cascade = {CascadeType.ALL})
+    private Address address;
 	
+	
+	
+
+	public Address getAddress() {
+		return address;
+	}
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	public Long getId() {
 		return id;
 	}

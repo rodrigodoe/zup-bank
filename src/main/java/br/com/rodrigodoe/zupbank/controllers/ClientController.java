@@ -34,7 +34,7 @@ public class ClientController {
 
 		ClientDTO client = clientService.create(clientDto);
 
-		return ResponseEntity.created(URI.create("/clients/" + client.getId())).body(client);
+		return ResponseEntity.created(URI.create("/client/" + client.getId())).body(client);
 
 	}
 
