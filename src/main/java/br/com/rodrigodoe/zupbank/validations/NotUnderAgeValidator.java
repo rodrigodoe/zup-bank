@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
 
-public class NotUnderAgeValidation implements ConstraintValidator<NotUnderAge, LocalDate>{
+public class NotUnderAgeValidator implements ConstraintValidator<NotUnderAge, LocalDate>{
 
 	
 	@Override

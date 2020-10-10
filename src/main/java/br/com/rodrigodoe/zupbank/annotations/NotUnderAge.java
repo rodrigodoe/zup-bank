@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import br.com.rodrigodoe.zupbank.validations.NotUnderAgeValidation;
+import br.com.rodrigodoe.zupbank.validations.NotUnderAgeValidator;
 
 
-@Constraint(validatedBy = NotUnderAgeValidation.class)
+@Constraint(validatedBy = NotUnderAgeValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotUnderAge{

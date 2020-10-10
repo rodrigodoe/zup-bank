@@ -9,6 +9,8 @@ import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.com.rodrigodoe.zupbank.annotations.ZipCode;
+
 @SuppressWarnings("rawtypes")
 @JsonInclude(Include.NON_NULL)
 public class AddressDTO extends RepresentationModel  implements Serializable {
@@ -22,6 +24,7 @@ public class AddressDTO extends RepresentationModel  implements Serializable {
 	private Long id;
 	
 	@NotNull
+	@ZipCode
 	private String zipcode;
 	
 	@NotNull
@@ -38,6 +41,7 @@ public class AddressDTO extends RepresentationModel  implements Serializable {
 	
 	@NotNull
 	private String state;
+	
 
 	public Long getId() {
 		return id;

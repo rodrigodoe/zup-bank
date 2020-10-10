@@ -3,8 +3,6 @@ package br.com.rodrigodoe.zupbank.data.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
-import br.com.rodrigodoe.zupbank.data.models.Address;
 
 @SuppressWarnings("rawtypes")
 @JsonInclude(Include.NON_NULL)
@@ -44,16 +41,19 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
 	@NotUnderAge
 	private LocalDate birthDay;
 	
-	private Address Address;
+	private AddressDTO adressDto;
 	
 	
 
-	public Address getAddress() {
-		return Address;
+	
+
+
+	public AddressDTO getAdressDto() {
+		return adressDto;
 	}
 
-	public void setAddress(Address address) {
-		Address = address;
+	public void setAdressDto(AddressDTO adressDto) {
+		this.adressDto = adressDto;
 	}
 
 	public Long getId() {

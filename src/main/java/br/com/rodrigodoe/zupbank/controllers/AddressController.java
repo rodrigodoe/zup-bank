@@ -14,44 +14,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.rodrigodoe.zupbank.data.dtos.AddressDTO;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
-import br.com.rodrigodoe.zupbank.services.ClientService;
-import br.com.rodrigodoe.zupbank.utils.ClientHateoasUtils;
+import br.com.rodrigodoe.zupbank.services.AddressService;
+import br.com.rodrigodoe.zupbank.utils.AddressHateoasUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/client")
-@Api(value = "Client Endpoint", tags = { "client" })
-public class ClientController {
+@RequestMapping("/address")
+@Api(value = "Address Endpoint", tags = { "Address" })
+public class AddressController {
+	
 
 	@Autowired
-	private ClientService clientService;
+	private AddressService addressService;
 
 	@PostMapping
 	@ApiOperation(value = "Create")
-	public ResponseEntity<?> create(@RequestBody @Valid ClientDTO clientDto) {
+	public ResponseEntity<?> create(@RequestBody @Valid AddressDTO addressDTO) {
 
-		ClientDTO client = clientService.create(clientDto);
+		AddressDTO addressDto = addressService.create(addressDTO);
 
-		return ResponseEntity.created(URI.create("/client/" + client.getId())).body(client);
+		return ResponseEntity.created(URI.create("/client/" + addressDto.getId())).body(addressDto);
 
 	}
 
 	@GetMapping
 	@ApiOperation(value = "findAll")
-	public List<ClientDTO> findAll() {
-		List<ClientDTO> clients = clientService.findAll();
-		clients.stream().forEach(c -> ClientHateoasUtils.create(c));
-		return clients;
-	}
+	public List<AddressDTO> findAll() {
+		List<AddressDTO> addresses = addressService.findAll();
+		addresses.stream().forEach(a -> AddressHateoasUtils.create(a));
+		return addresses;
+	} 
 
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "findById")
-	public ClientDTO findByid(@PathVariable("id") Long id) {
-		ClientDTO clientDTO = clientService.findById(id);
-	    ClientHateoasUtils.create(clientDTO);
-		return clientDTO;
-	}
+	public AddressDTO findByid(@PathVariable("id") Long id) {
+		AddressDTO addressDto = addressService.findById(id);
+	    AddressHateoasUtils.create(addressDto);
+		return addressDto;
+	} 
 
 }

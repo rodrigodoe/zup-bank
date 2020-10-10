@@ -8,7 +8,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import br.com.rodrigodoe.zupbank.controllers.ClientController;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 
-public class ClientHateoasUtil {
+public class ClientHateoasUtils {
 	
 	
 	public static void create(ClientDTO model) {
