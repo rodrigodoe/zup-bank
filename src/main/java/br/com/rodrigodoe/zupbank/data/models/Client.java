@@ -1,4 +1,4 @@
-package br.com.rodrigodoe.zupbank.data.model;
+package br.com.rodrigodoe.zupbank.data.models;
 
 import java.time.LocalDate;
 
@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -26,7 +24,6 @@ public class Client {
 	private String email;
 	
 	@Column(nullable = false)
-    @JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate birthDay;
 	@Column(nullable = false)
 	private String cpf;

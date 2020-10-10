@@ -1,44 +1,57 @@
 package br.com.rodrigodoe.zupbank.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
-import br.com.rodrigodoe.zupbank.data.dto.ClientDTO;
-import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
-import br.com.rodrigodoe.zupbank.data.model.Client;
+import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.services.ClientService;
-import javassist.tools.web.BadHttpRequest;
-
-
+import br.com.rodrigodoe.zupbank.utils.ClientHateoasUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/client")
+@Api(value = "Client Endpoint", tags = { "client" })
 public class ClientController {
-	
+
 	@Autowired
 	private ClientService clientService;
-	
-	
+
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody @Valid ClientForm clientForm) {
-		
-	    	 ClientDTO client = clientService.create(clientForm);
-	  
-	   
-		
-		return ResponseEntity.created(URI.create("/clients/"+client.getId())).body(client);
-		
-		
+	@ApiOperation(value = "Create")
+	public ResponseEntity<?> create(@RequestBody @Valid ClientDTO clientDto) {
+
+		ClientDTO client = clientService.create(clientDto);
+
+		return ResponseEntity.created(URI.create("/clients/" + client.getId())).body(client);
+
 	}
-	
+
+	@GetMapping
+	@ApiOperation(value = "findAll")
+	public List<ClientDTO> findAll() {
+		List<ClientDTO> clients = clientService.findAll();
+		clients.stream().forEach(c -> ClientHateoasUtil.create(c));
+		return clients;
+	}
+
+	@GetMapping(value = "/{id}")
+	@ApiOperation(value = "findById")
+	public ClientDTO findByid(@PathVariable("id") Long id) {
+		ClientDTO clientDTO = clientService.findById(id);
+	    ClientHateoasUtil.create(clientDTO);
+		return clientDTO;
+	}
 
 }
