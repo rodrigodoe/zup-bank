@@ -22,38 +22,30 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/client/{clientId}/address")
 @Api(value = "Address Endpoint", tags = { "Address" })
 public class AddressController {
-	
 
 	@Autowired
 	private AddressService addressService;
 
 	@PostMapping
 	@ApiOperation(value = "Create")
-	public ResponseEntity<?> create(@RequestBody @Valid AddressDTO addressDTO) {
+	public ResponseEntity<?> create(@PathVariable("clientId") Long clientId,
+			@RequestBody @Valid AddressDTO addressDTO) {
 
-		AddressDTO addressDto = addressService.create(addressDTO);
+		AddressDTO addressDto = addressService.create(clientId, addressDTO);
 
-		return ResponseEntity.created(URI.create("/client/" + addressDto.getId())).body(addressDto);
+		return ResponseEntity.created(URI.create("/client/" + addressDto.getId() + "/address")).body(addressDto);
 
 	}
 
 	@GetMapping
-	@ApiOperation(value = "findAll")
-	public List<AddressDTO> findAll() {
-		List<AddressDTO> addresses = addressService.findAll();
-		addresses.stream().forEach(a -> AddressHateoasUtils.create(a));
-		return addresses;
-	} 
-
-	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "findById")
-	public AddressDTO findByid(@PathVariable("id") Long id) {
-		AddressDTO addressDto = addressService.findById(id);
-	    AddressHateoasUtils.create(addressDto);
+	public AddressDTO find(@PathVariable("clientId") Long clientId) {
+		AddressDTO addressDto = addressService.findByClientId(clientId);
+		AddressHateoasUtils.create(addressDto);
 		return addressDto;
-	} 
+	}
 
 }

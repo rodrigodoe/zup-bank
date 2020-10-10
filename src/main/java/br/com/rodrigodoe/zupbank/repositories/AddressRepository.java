@@ -9,6 +9,8 @@ import br.com.rodrigodoe.zupbank.data.models.Address;
 
 @Repository
 public interface AddressRepository extends JpaRepository<Address, Long> {
+
+	Optional<Address> findByClientId(Long clientId);
 	
 
 }

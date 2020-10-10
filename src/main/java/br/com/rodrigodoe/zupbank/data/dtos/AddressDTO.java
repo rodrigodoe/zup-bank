@@ -6,10 +6,12 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.rodrigodoe.zupbank.annotations.ZipCode;
+import br.com.rodrigodoe.zupbank.data.models.Client;
 
 @SuppressWarnings("rawtypes")
 @JsonInclude(Include.NON_NULL)
@@ -41,7 +43,19 @@ public class AddressDTO extends RepresentationModel  implements Serializable {
 	
 	@NotNull
 	private String state;
+	@JsonIgnore
+	private Client client;
 	
+	
+	
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
 	public Long getId() {
 		return id;

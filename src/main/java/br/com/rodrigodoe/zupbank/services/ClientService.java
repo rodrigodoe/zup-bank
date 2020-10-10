@@ -1,6 +1,5 @@
 package br.com.rodrigodoe.zupbank.services;
 
-
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -24,9 +23,9 @@ public class ClientService {
 
 		try {
 
-			Client client = ClientConverterUtils.convertToEntity(clientDto);
+			var client = ClientConverterUtils.convertToEntity(clientDto);
 
-			Client existingClient = clientRepository.findByEmail(clientDto.getEmail());
+			var existingClient = clientRepository.findByEmail(clientDto.getEmail());
 
 			if (existingClient != null) {
 				throw new DuplicateConstraintException("Email existente no banco de dados!");
@@ -47,9 +46,26 @@ public class ClientService {
 	}
 
 	public ClientDTO findById(Long id) {
-		Client client =  clientRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
+		var client = clientRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
+
 		return ClientConverterUtils.convertToDto(client);
+	}
+
+	public Client findEntityById(Long id) {
+		var client = clientRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
+		return client;
+	}
+
+	public ClientDTO update(ClientDTO clientDto) {
+		var client = findEntityById(clientDto.getId());
+		client.setCpf(clientDto.getCpf());
+		client.setBirthDay(clientDto.getBirthDay());
+		client.setEmail(clientDto.getEmail());
+		client.setFirstName(clientDto.getFirstName());
+		client.setLastName(clientDto.getLastName());
+		return ClientConverterUtils.convertToDto(clientRepository.save(client));
 	}
 
 }

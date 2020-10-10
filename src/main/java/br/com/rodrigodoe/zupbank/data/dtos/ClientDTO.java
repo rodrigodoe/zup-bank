@@ -40,21 +40,7 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd")
 	@NotUnderAge
 	private LocalDate birthDay;
-	
-	private AddressDTO adressDto;
-	
-	
-
-	
-
-
-	public AddressDTO getAdressDto() {
-		return adressDto;
-	}
-
-	public void setAdressDto(AddressDTO adressDto) {
-		this.adressDto = adressDto;
-	}
+		
 
 	public Long getId() {
 		return id;
