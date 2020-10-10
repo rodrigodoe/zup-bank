@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import br.com.rodrigodoe.zupbank.services.ClientService;
 import br.com.rodrigodoe.zupbank.utils.ClientHateoasUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.Response;
 
 @RestController
 @RequestMapping("/client")
@@ -59,6 +61,12 @@ public class ClientController {
 	public ClientDTO update(@RequestBody ClientDTO clientDto) {
 		ClientDTO updatedClientDto = clientService.update(clientDto);
 		return updatedClientDto;
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+		 clientService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 
 }

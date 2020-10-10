@@ -68,4 +68,9 @@ public class ClientService {
 		return ClientConverterUtils.convertToDto(clientRepository.save(client));
 	}
 
+	public void delete(Long id) {
+		var client = findEntityById(id);
+		clientRepository.deleteById(client.getId());
+	}
+
 }
