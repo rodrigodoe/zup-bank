@@ -58,8 +58,8 @@ public class ClientService {
 		return client;
 	}
 
-	public ClientDTO update(ClientDTO clientDto) {
-		var client = findEntityById(clientDto.getId());
+	public ClientDTO update(Long id, ClientDTO clientDto) {
+		var client = findEntityById(id);
 		client.setCpf(clientDto.getCpf());
 		client.setBirthDay(clientDto.getBirthDay());
 		client.setEmail(clientDto.getEmail());
@@ -72,5 +72,7 @@ public class ClientService {
 		var client = findEntityById(id);
 		clientRepository.deleteById(client.getId());
 	}
+
+
 
 }

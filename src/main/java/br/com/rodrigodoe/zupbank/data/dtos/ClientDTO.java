@@ -40,6 +40,10 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd")
 	@NotUnderAge
 	private LocalDate birthDay;
+	@NotNull
+	@CPF
+	private String cpf;
+	
 		
 
 	public Long getId() {
@@ -50,9 +54,7 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
 		this.id = id;
 	}
 
-	@NotNull
-	@CPF
-	private String cpf;
+	
 
 	public String getFirstName() {
 		return firstName;

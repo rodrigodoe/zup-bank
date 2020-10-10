@@ -16,8 +16,8 @@ public class ClientHateoasUtils {
 		model.add(linkTo(methodOn(ClientController.class).findByid(model.getId()))
 				.withSelfRel());
 		
-		model.add(linkTo(methodOn(ClientController.class).findByid(model.getId()))
-				.withSelfRel());
+		model.add(linkTo(methodOn(AddressController.class).find(model.getId()))
+				.withRel("address"));
 
 		
 	}

@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.models.Response;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/clients")
 @Api(value = "Client Endpoint", tags = { "client" })
 public class ClientController {
 
@@ -37,7 +37,7 @@ public class ClientController {
 
 		ClientDTO client = clientService.create(clientDto);
 
-		return ResponseEntity.created(URI.create("/client/" + client.getId())).body(client);
+		return ResponseEntity.created(URI.create("/clients/" + client.getId())).body(client);
 
 	}
 
@@ -58,8 +58,8 @@ public class ClientController {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ClientDTO update(@RequestBody ClientDTO clientDto) {
-		ClientDTO updatedClientDto = clientService.update(clientDto);
+	public ClientDTO update(@PathVariable("id") Long id, @RequestBody @Valid ClientDTO clientDto) {
+		ClientDTO updatedClientDto = clientService.update(id, clientDto);
 		return updatedClientDto;
 	}
 	
