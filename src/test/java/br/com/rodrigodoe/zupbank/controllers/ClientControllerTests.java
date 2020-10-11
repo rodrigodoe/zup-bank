@@ -1,6 +1,5 @@
 package br.com.rodrigodoe.zupbank.controllers;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.Mockito.when;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
