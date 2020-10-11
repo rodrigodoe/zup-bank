@@ -6,11 +6,12 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.rodrigodoe.zupbank.data.dtos.AddressDTO;
+import br.com.rodrigodoe.zupbank.data.models.Address;
 import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.repositories.AddressRepository;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
-import br.com.rodrigodoe.zupbank.utils.AddressConverterUtils;
+import br.com.rodrigodoe.zupbank.utils.ClassConverterUtils;
 
 @Service
 public class AddressService {
@@ -23,7 +24,7 @@ public class AddressService {
 
 	public AddressDTO create(Long clientId, AddressDTO addressDTO) {
 
-		var addressEntity = AddressConverterUtils.convertToEntity(addressDTO);
+		var addressEntity = ClassConverterUtils.convert(addressDTO, Address.class);
 
 		clientRepository.findById(clientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Cliente nao cadastro no banco de dados"));
@@ -40,23 +41,25 @@ public class AddressService {
 
 		var newAdressEntity = this.addressRepository.save(addressEntity);
 
-		return AddressConverterUtils.convertToDto(newAdressEntity);
+		return ClassConverterUtils.convert(newAdressEntity, AddressDTO.class);
 	}
 
 	public AddressDTO findByClientId(Long clientId) {
 		
 		var address = this.addressRepository.findByClientId(clientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Nenhum endereco encontrado"));
-		return AddressConverterUtils.convertToDto(address);
+		return ClassConverterUtils.convert(address, AddressDTO.class);
 	}
 
 
 
 	public AddressDTO update(Long clientId, AddressDTO adressDto) {
-		var address = this.addressRepository.findByClientId(clientId)
+		Address address = this.addressRepository.findByClientId(clientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Nenhum cliente/endereco encontrado"));
 		
-		var addressEntity = AddressConverterUtils.convertToEntity(adressDto);
+		Address addressEntity = ClassConverterUtils.convert(adressDto, Address.class);
+		
+		
 		
 		address.setAddressLine1(addressEntity.getAddressLine1());
 		address.setAddressLine2(addressEntity.getAddressLine2());
@@ -68,7 +71,10 @@ public class AddressService {
 		client.setId(clientId);
 		address.setClient(client);
 		
-		return AddressConverterUtils.convertToDto(this.addressRepository.save(address));
+		Address  entity = this.addressRepository.save(address);
+		
+
+		return ClassConverterUtils.convert(entity, AddressDTO.class);
 		
 	}
 

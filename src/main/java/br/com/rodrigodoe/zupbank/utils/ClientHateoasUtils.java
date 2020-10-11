@@ -15,7 +15,7 @@ public class ClientHateoasUtils {
 				.withSelfRel());
 		
 		model.add(linkTo(methodOn(AddressController.class).find(model.getId()))
-				.withRel("Address"));
+				.withRel("address"));
 	}
 }
 	

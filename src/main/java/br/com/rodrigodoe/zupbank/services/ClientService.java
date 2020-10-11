@@ -11,7 +11,7 @@ import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
-import br.com.rodrigodoe.zupbank.utils.ClientConverterUtils;
+import br.com.rodrigodoe.zupbank.utils.ClassConverterUtils;
 
 @Service
 public class ClientService {
@@ -23,7 +23,7 @@ public class ClientService {
 
 		try {
 
-			var client = ClientConverterUtils.convertToEntity(clientDto);
+			var client = ClassConverterUtils.convert(clientDto, Client.class);
 
 			var existingClient = clientRepository.findByEmail(clientDto.getEmail());
 
@@ -32,7 +32,7 @@ public class ClientService {
 			}
 
 			Client newClient = clientRepository.save(client);
-			return ClientConverterUtils.convertToDto(newClient);
+			return ClassConverterUtils.convert(newClient, ClientDTO.class);
 
 		} catch (DateTimeParseException e) {
 			throw new RuntimeException("Formato de data invalida");
@@ -42,14 +42,14 @@ public class ClientService {
 
 	public List<ClientDTO> findAll() {
 		List<Client> clients = this.clientRepository.findAll();
-		return ClientConverterUtils.convertList(clients, ClientDTO.class);
+		return ClassConverterUtils.convertList(clients, ClientDTO.class);
 	}
 
 	public ClientDTO findById(Long id) {
 		var client = clientRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
 
-		return ClientConverterUtils.convertToDto(client);
+		return ClassConverterUtils.convert(client, ClientDTO.class);
 	}
 
 	public Client findEntityById(Long id) {
@@ -65,14 +65,12 @@ public class ClientService {
 		client.setEmail(clientDto.getEmail());
 		client.setFirstName(clientDto.getFirstName());
 		client.setLastName(clientDto.getLastName());
-		return ClientConverterUtils.convertToDto(clientRepository.save(client));
+		return ClassConverterUtils.convert(clientRepository.save(client), ClientDTO.class);
 	}
 
 	public void delete(Long id) {
 		var client = findEntityById(id);
 		clientRepository.deleteById(client.getId());
 	}
-
-
 
 }

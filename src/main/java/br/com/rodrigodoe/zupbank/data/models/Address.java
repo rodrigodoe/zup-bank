@@ -35,6 +35,7 @@ public class Address {
 	
 	@OneToOne
 	private Client client;
+	
 
 	public Long getId() {
 		return id;

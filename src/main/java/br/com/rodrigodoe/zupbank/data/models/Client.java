@@ -2,16 +2,16 @@ package br.com.rodrigodoe.zupbank.data.models;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 
 @Entity
@@ -32,6 +32,10 @@ public class Client {
 	private LocalDate birthDay;
 	@Column(nullable = false)
 	private String cpf;
+	
+	@OneToOne(mappedBy = "client")
+	@Cascade(CascadeType.DELETE)
+	private Address address;
 		
 	public Long getId() {
 		return id;

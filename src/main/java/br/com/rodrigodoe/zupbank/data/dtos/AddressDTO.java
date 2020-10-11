@@ -2,7 +2,6 @@ package br.com.rodrigodoe.zupbank.data.dtos;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.hateoas.RepresentationModel;
