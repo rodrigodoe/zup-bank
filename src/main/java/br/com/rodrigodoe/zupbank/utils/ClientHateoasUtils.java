@@ -1,9 +1,7 @@
 package br.com.rodrigodoe.zupbank.utils;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import br.com.rodrigodoe.zupbank.controllers.AddressController;
 import br.com.rodrigodoe.zupbank.controllers.ClientController;
@@ -17,8 +15,7 @@ public class ClientHateoasUtils {
 				.withSelfRel());
 		
 		model.add(linkTo(methodOn(AddressController.class).find(model.getId()))
-				.withRel("address"));
-
-		
+				.withRel("Address"));
 	}
 }
+	

@@ -21,7 +21,6 @@ import br.com.rodrigodoe.zupbank.services.ClientService;
 import br.com.rodrigodoe.zupbank.utils.ClientHateoasUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.Response;
 
 @RestController
 @RequestMapping("/clients")
@@ -44,7 +43,7 @@ public class ClientController {
 	@GetMapping
 	@ApiOperation(value = "findAll")
 	public List<ClientDTO> findAll() {
-		List<ClientDTO> clients = clientService.findAll();
+		List<ClientDTO> clients = this.clientService.findAll();
 		clients.stream().forEach(c -> ClientHateoasUtils.create(c));
 		return clients;
 	}

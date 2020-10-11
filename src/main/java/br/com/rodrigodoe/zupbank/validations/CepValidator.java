@@ -1,6 +1,5 @@
 package br.com.rodrigodoe.zupbank.validations;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.validation.ConstraintValidator;
@@ -15,8 +14,9 @@ public class CepValidator implements ConstraintValidator<ZipCode, String>{
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		Matcher m = pattern.matcher(value);
-	    return m.matches();
+		
+		
+	    return value != null ? pattern.matcher(value).matches(): false;
 	}
 
 }
