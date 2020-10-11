@@ -36,9 +36,9 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
 	@Email
 	@NotNull
 	private String email;
-	@NotNull
     @JsonFormat(pattern="yyyy-MM-dd")
 	@NotUnderAge
+	@NotNull
 	private LocalDate birthDay;
 	@NotNull
 	@CPF
