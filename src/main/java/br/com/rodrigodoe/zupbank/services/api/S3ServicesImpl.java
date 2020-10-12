@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
@@ -66,7 +67,7 @@ public class S3ServicesImpl implements S3Services {
 	@Override
 	public String uploadFile(MultipartFile file) throws IOException {
 		try {
-			String key = generateRandomString()+ "."+generateFileType(file.getOriginalFilename());
+			String key = generateRandomString() + "." + generateFileType(file.getOriginalFilename());
 			ObjectMetadata metadata = new ObjectMetadata();
 			metadata.setContentLength(file.getSize());
 			s3client.putObject(bucketName, key, file.getInputStream(), metadata);
@@ -104,6 +105,12 @@ public class S3ServicesImpl implements S3Services {
 		return random.ints(leftLimit, rightLimit + 1).filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
 				.limit(targetStringLength)
 				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+
+	}
+
+	@Override
+	public void deleteFile(String file) {
+		s3client.deleteObject(new DeleteObjectRequest(bucketName, file));
 
 	}
 }

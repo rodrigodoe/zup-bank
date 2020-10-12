@@ -17,12 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.rodrigodoe.zupbank.data.dtos.FileStorageDTO;
-import br.com.rodrigodoe.zupbank.data.models.FileStorage;
 import br.com.rodrigodoe.zupbank.services.FileStoreService;
 import br.com.rodrigodoe.zupbank.services.api.S3Services;
+import br.com.rodrigodoe.zupbank.utils.FileStorageHateoasUtils;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/clients/{clientId}/file")
+@RequestMapping("/clients/{clientId}/files")
 public class BucketController {
 
 	@Autowired
@@ -36,17 +37,28 @@ public class BucketController {
 			throws IOException {
 
 		FileStorageDTO dto = fileStoreService.save(clientId, file);
-		return ResponseEntity.created(URI.create("/clients/"+clientId+"/file/download/"+ dto.getFilename())).body(dto);
+		return ResponseEntity.created(URI.create("/clients/" + clientId + "/file/download/" + dto.getFilename()))
+				.body(dto);
 
 	}
 
-	@GetMapping("/download/{keyname}")
-	public ResponseEntity<byte[]> downloadFile(@PathVariable String keyname) {
-		ByteArrayOutputStream downloadInputStream = s3Services.downloadFile(keyname);
+	@GetMapping("/{keyname}")
+	public ResponseEntity<byte[]> downloadFile(@PathVariable("clientId") Long clientId, @PathVariable String keyname) {
+		
+		ByteArrayOutputStream downloadInputStream = fileStoreService.findByFileName(clientId, keyname);
+		
 
 		return ResponseEntity.ok().contentType(contentType(keyname))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + keyname + "\"")
 				.body(downloadInputStream.toByteArray());
+	}
+
+	@GetMapping
+	@ApiOperation(value = "find")
+	public FileStorageDTO find(@PathVariable("clientId") Long clientId) {
+		FileStorageDTO dto = fileStoreService.findByClientId(clientId);
+		FileStorageHateoasUtils.create(dto);
+		return dto;
 	}
 
 	private MediaType contentType(String keyname) {

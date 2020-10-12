@@ -17,12 +17,8 @@ import lombok.EqualsAndHashCode;
 
 @JsonInclude(Include.NON_NULL)
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = false)
 public class AddressDTO extends RepresentationModel<AddressDTO> implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4431326883533174354L;
 
 	@EqualsAndHashCode.Include

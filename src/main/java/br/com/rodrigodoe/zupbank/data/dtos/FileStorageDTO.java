@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 
 @JsonInclude(Include.NON_NULL)
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = false)
 public class FileStorageDTO extends RepresentationModel<FileStorageDTO> implements Serializable {
 
 	private static final long serialVersionUID = -2076251076082242246L;

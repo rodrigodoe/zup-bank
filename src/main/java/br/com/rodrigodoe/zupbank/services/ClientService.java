@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
+import br.com.rodrigodoe.zupbank.exceptions.MyUnprocessableEntityException;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
 import br.com.rodrigodoe.zupbank.utils.ClassConverterUtils;
 
@@ -71,6 +72,29 @@ public class ClientService {
 	public void delete(Long id) {
 		var client = findEntityById(id);
 		clientRepository.deleteById(client.getId());
+	}
+
+	public ClientDTO validade(Long id) {
+		Client enttiy = this.clientRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Proposta nao encontrada"));
+
+		ClientDTO dto = ClassConverterUtils.convert(enttiy, ClientDTO.class);
+
+		if (dto.getAddress() == null) {
+			throw new MyUnprocessableEntityException("Endereco nao cadastrado na proposta!");
+		}
+
+		if (dto.getFile() == null) {
+			throw new MyUnprocessableEntityException("Foto da frente do CPF nao enviada!");
+		}
+
+		return dto;
+
+	}
+
+	public ClientDTO confirm(Long id) {
+		ClientDTO dto = this.validade(id);
+		return null;
 	}
 
 }

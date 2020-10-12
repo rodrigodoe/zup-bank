@@ -11,4 +11,6 @@ public interface S3Services {
 
 	public String uploadFile(MultipartFile file) throws IOException;
 
+	public void deleteFile(String file);
+
 }

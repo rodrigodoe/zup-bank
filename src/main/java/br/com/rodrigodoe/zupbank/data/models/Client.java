@@ -46,7 +46,8 @@ public class Client {
 	
 	@OneToOne(mappedBy = "client")
 	@Cascade(CascadeType.DELETE)
-	private FileStorage fotoCPF;
+	private FileStorage file;
+	
 
 
 	

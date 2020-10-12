@@ -15,13 +15,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
+import br.com.rodrigodoe.zupbank.data.models.Address;
+import br.com.rodrigodoe.zupbank.data.models.FileStorage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
 @JsonInclude(Include.NON_NULL)
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(callSuper = false)
 public class ClientDTO extends RepresentationModel<ClientDTO> implements Serializable {
 
 	private static final long serialVersionUID = 7758676040163998645L;
@@ -45,5 +47,9 @@ public class ClientDTO extends RepresentationModel<ClientDTO> implements Seriali
 	@NotNull
 	@CPF
 	private String cpf;
+	
+	private AddressDTO address;
+	
+	private FileStorageDTO file;
 
 }

@@ -36,6 +36,8 @@ public class ClientController {
 
 		ClientDTO client = clientService.create(clientDto);
 
+		ClientHateoasUtils.create(client);
+
 		return ResponseEntity.created(URI.create("/clients/" + client.getId())).body(client);
 
 	}
@@ -59,13 +61,29 @@ public class ClientController {
 	@PutMapping(value = "/{id}")
 	public ClientDTO update(@PathVariable("id") Long id, @RequestBody @Valid ClientDTO clientDto) {
 		ClientDTO updatedClientDto = clientService.update(id, clientDto);
+		ClientHateoasUtils.create(updatedClientDto);
 		return updatedClientDto;
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		 clientService.delete(id);
+		clientService.delete(id);
 		return ResponseEntity.ok().build();
 	}
+
+	@GetMapping(value = "/{id}/validate")
+	public ClientDTO validade(@PathVariable("id") Long id) {
+		ClientDTO dto = clientService.validade(id);
+		ClientHateoasUtils.create(dto);
+		return dto;
+	}
+	
+	@GetMapping(value = "/{id}/confirm")
+	public ClientDTO confirm(@PathVariable("id") Long id) {
+		ClientDTO dto = clientService.confirm(id);
+		ClientHateoasUtils.create(dto);
+		return dto;
+	}
+
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import br.com.rodrigodoe.zupbank.exceptions.CustomizedValidationError;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.exceptions.InvalidAgeException;
+import br.com.rodrigodoe.zupbank.exceptions.MyUnprocessableEntityException;
 
 @RestControllerAdvice
 public class CustomizedExceptionHandlers {
@@ -34,6 +35,13 @@ public class CustomizedExceptionHandlers {
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public CustomizedValidationError handleResourcesNotFoundExceptions(Exception ex) {
+		CustomizedValidationError customError = new CustomizedValidationError(ex.getMessage());
+		return customError;
+	}
+	
+	@ResponseStatus(code = HttpStatus.UNPROCESSABLE_ENTITY)
+	@ExceptionHandler(MyUnprocessableEntityException.class)
+	public CustomizedValidationError handleUnprocessableEntityExceptions(Exception ex) {
 		CustomizedValidationError customError = new CustomizedValidationError(ex.getMessage());
 		return customError;
 	}

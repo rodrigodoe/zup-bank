@@ -8,13 +8,10 @@ import br.com.rodrigodoe.zupbank.controllers.ClientController;
 import br.com.rodrigodoe.zupbank.data.dtos.AddressDTO;
 
 public class AddressHateoasUtils {
-	
+
 	public static void create(AddressDTO model) {
-		model.add(linkTo(methodOn(AddressController.class).find(model.getId()))
-				.withSelfRel());
-		
-		model.add(linkTo(methodOn(ClientController.class).findByid(model.getClient().getId()))
-				.withRel("client"));
-		
+		model.add(linkTo(methodOn(AddressController.class).find(model.getId())).withSelfRel())
+				.add(linkTo(methodOn(ClientController.class).findByid(model.getClient().getId())).withRel("client"));
+
 	}
 }

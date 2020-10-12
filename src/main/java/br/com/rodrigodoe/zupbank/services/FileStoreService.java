@@ -1,6 +1,8 @@
 package br.com.rodrigodoe.zupbank.services;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -36,6 +38,13 @@ public class FileStoreService {
 			String filename = s3Services.uploadFile(file);
 
 			FileStorage fs = new FileStorage();
+			Optional<FileStorage> opt = this.fileStorageRepository.findByClientId(clientId);
+			if (opt.isPresent()) {
+				s3Services.deleteFile(opt.get().getFilename());
+				fs.setId(opt.get().getId());
+
+			}
+
 			fs.setClient(client);
 			fs.setFilename(filename);
 			FileStorageDTO dto = ClassConverterUtils.convert(fileStorageRepository.save(fs), FileStorageDTO.class);
@@ -45,6 +54,25 @@ public class FileStoreService {
 			throw new IOException(e);
 		}
 
+	}
+
+	public FileStorageDTO findByClientId(Long clientId) {
+		FileStorage file = this.fileStorageRepository.findByClientId(clientId)
+				.orElseThrow(() -> new ResourceNotFoundException("Nenhum arquivo encontrado"));
+		return ClassConverterUtils.convert(file, FileStorageDTO.class);
+	}
+
+	public ByteArrayOutputStream findByFileName(Long clientId, String filename) {
+
+		clientRepository.findById(clientId)
+				.orElseThrow(() -> new ResourceNotFoundException("Cliente nao cadastro no banco de dados"));
+
+		this.fileStorageRepository.findByFilename(filename)
+				.orElseThrow(() -> new ResourceNotFoundException("Nenhum arquivo encontrado"));
+
+		ByteArrayOutputStream downloadInputStream = s3Services.downloadFile(filename);
+
+		return downloadInputStream;
 	}
 
 }
