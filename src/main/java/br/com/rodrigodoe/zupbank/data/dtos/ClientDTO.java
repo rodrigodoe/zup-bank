@@ -15,18 +15,20 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@SuppressWarnings("rawtypes")
+
 @JsonInclude(Include.NON_NULL)
-public class ClientDTO  extends RepresentationModel  implements Serializable {
-	
-	/**
-	 * 
-	 */
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class ClientDTO extends RepresentationModel<ClientDTO> implements Serializable {
+
 	private static final long serialVersionUID = 7758676040163998645L;
 
+	@EqualsAndHashCode.Include
 	private Long id;
-	
+
 	@NotNull
 	@NotBlank
 	private String firstName;
@@ -36,68 +38,12 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
 	@Email
 	@NotNull
 	private String email;
-    @JsonFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotUnderAge
 	@NotNull
 	private LocalDate birthDay;
 	@NotNull
 	@CPF
 	private String cpf;
-	
-	
-		
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public LocalDate getBirthDay() {
-		return birthDay;
-	}
-
-	public void setBirthDay(LocalDate birthDay) {
-		this.birthDay = birthDay;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-
-
 
 }
