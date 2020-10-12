@@ -44,6 +44,7 @@ public class ClientDTO  extends RepresentationModel  implements Serializable {
 	@CPF
 	private String cpf;
 	
+	
 		
 
 	public Long getId() {

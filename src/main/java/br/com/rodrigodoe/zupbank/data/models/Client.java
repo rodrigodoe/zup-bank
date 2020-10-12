@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -36,6 +35,21 @@ public class Client {
 	@OneToOne(mappedBy = "client")
 	@Cascade(CascadeType.DELETE)
 	private Address address;
+	
+	@OneToOne(mappedBy = "client")
+	@Cascade(CascadeType.DELETE)
+	private FileStorage fotoCPF;
+
+	
+	
+	public Address getAddress() {
+		return address;
+	}
+	
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 		
 	public Long getId() {
 		return id;
@@ -80,10 +94,12 @@ public class Client {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((birthDay == null) ? 0 : birthDay.hashCode());
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((fotoCPF == null) ? 0 : fotoCPF.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
@@ -97,6 +113,11 @@ public class Client {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
 		if (birthDay == null) {
 			if (other.birthDay != null)
 				return false;
@@ -116,6 +137,11 @@ public class Client {
 			if (other.firstName != null)
 				return false;
 		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (fotoCPF == null) {
+			if (other.fotoCPF != null)
+				return false;
+		} else if (!fotoCPF.equals(other.fotoCPF))
 			return false;
 		if (id == null) {
 			if (other.id != null)
