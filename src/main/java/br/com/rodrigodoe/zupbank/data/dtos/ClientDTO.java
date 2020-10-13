@@ -8,9 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -19,7 +21,6 @@ import br.com.rodrigodoe.zupbank.data.models.Address;
 import br.com.rodrigodoe.zupbank.data.models.FileStorage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 
 @JsonInclude(Include.NON_NULL)
 @Data
@@ -40,16 +41,16 @@ public class ClientDTO extends RepresentationModel<ClientDTO> implements Seriali
 	@Email
 	@NotNull
 	private String email;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	@NotUnderAge
 	@NotNull
+	@DateTimeFormat(pattern = "dd-mm-yyyy")
+	@NotUnderAge
 	private LocalDate birthDay;
 	@NotNull
 	@CPF
 	private String cpf;
-	
+	@JsonIgnore
 	private AddressDTO address;
-	
+	@JsonIgnore
 	private FileStorageDTO file;
 
 }

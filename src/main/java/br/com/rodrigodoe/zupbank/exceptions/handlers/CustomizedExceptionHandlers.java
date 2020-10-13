@@ -57,7 +57,7 @@ public class CustomizedExceptionHandlers {
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(value = {HttpMessageNotReadableException.class, DateTimeParseException.class})
 	public CustomizedValidationError handleDateTimeParseException(Exception ex) {
-		CustomizedValidationError customError = new CustomizedValidationError("FORMATO DE DADA INVALIDA");
+		CustomizedValidationError customError = new CustomizedValidationError("FORMATO DE DATA INVALIDA");
 		return customError;
 	}
 	
