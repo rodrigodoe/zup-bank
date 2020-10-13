@@ -5,20 +5,18 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
-import br.com.rodrigodoe.zupbank.data.models.Address;
-import br.com.rodrigodoe.zupbank.data.models.FileStorage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

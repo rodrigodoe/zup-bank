@@ -94,7 +94,7 @@ public class ClientService {
 
 	public ClientDTO confirm(Long id) {
 		ClientDTO dto = this.validade(id);
-		return null;
+		return dto;
 	}
 
 }

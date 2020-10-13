@@ -17,7 +17,7 @@ import br.com.rodrigodoe.zupbank.validations.CepValidator;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ZipCode {
   
-  String message() default "Cep inválido use padrão 00000-00";
+  String message() default "Cep inválido use padrão 00000-000";
   Class<?>[] groups() default { };
   Class<? extends Payload>[] payload() default { };
 

@@ -6,7 +6,6 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +18,14 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.rodrigodoe.zupbank.data.dtos.FileStorageDTO;
 import br.com.rodrigodoe.zupbank.services.FileStoreService;
 import br.com.rodrigodoe.zupbank.services.api.S3Services;
+import br.com.rodrigodoe.zupbank.utils.ContentTypeUtils;
 import br.com.rodrigodoe.zupbank.utils.FileStorageHateoasUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/clients/{clientId}/files")
+@Api(value = "File Endpoint", tags = { "files", "bucket" })
+@RequestMapping("/file/{clientId}")
 public class BucketController {
 
 	@Autowired
@@ -33,47 +35,32 @@ public class BucketController {
 	FileStoreService fileStoreService;
 
 	@PostMapping
+	@ApiOperation(value = "Upload a document photo from a client")
 	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable Long clientId)
 			throws IOException {
 
 		FileStorageDTO dto = fileStoreService.save(clientId, file);
-		return ResponseEntity.created(URI.create("/clients/" + clientId + "/file/download/" + dto.getFilename()))
-				.body(dto);
+		return ResponseEntity.created(URI.create("/files/" + clientId + "/" + dto.getFilename())).body(dto);
 
 	}
 
 	@GetMapping("/{keyname}")
+	@ApiOperation(value = "Download a document photo from a client")
 	public ResponseEntity<byte[]> downloadFile(@PathVariable("clientId") Long clientId, @PathVariable String keyname) {
-		
-		ByteArrayOutputStream downloadInputStream = fileStoreService.findByFileName(clientId, keyname);
-		
 
-		return ResponseEntity.ok().contentType(contentType(keyname))
+		ByteArrayOutputStream downloadInputStream = fileStoreService.findByFileName(clientId, keyname);
+
+		return ResponseEntity.ok().contentType(ContentTypeUtils.contentType(keyname))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + keyname + "\"")
 				.body(downloadInputStream.toByteArray());
 	}
 
 	@GetMapping
-	@ApiOperation(value = "find")
+	@ApiOperation(value = "Find a document from a client")
 	public FileStorageDTO find(@PathVariable("clientId") Long clientId) {
 		FileStorageDTO dto = fileStoreService.findByClientId(clientId);
 		FileStorageHateoasUtils.create(dto);
 		return dto;
-	}
-
-	private MediaType contentType(String keyname) {
-		String[] arr = keyname.split("\\.");
-		String type = arr[arr.length - 1];
-		switch (type) {
-		case "txt":
-			return MediaType.TEXT_PLAIN;
-		case "png":
-			return MediaType.IMAGE_PNG;
-		case "jpg":
-			return MediaType.IMAGE_JPEG;
-		default:
-			return MediaType.APPLICATION_OCTET_STREAM;
-		}
 	}
 
 }

@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/clients/{clientId}/address")
+@RequestMapping("/address/{clientId}")
 @Api(value = "Address Endpoint", tags = { "Address" })
 public class AddressController {
 
@@ -29,18 +29,18 @@ public class AddressController {
 	private AddressService addressService;
 
 	@PostMapping
-	@ApiOperation(value = "Create")
+	@ApiOperation(value = "Create a address from a client")
 	public ResponseEntity<?> create(@PathVariable("clientId") Long clientId,
 			@RequestBody @Valid AddressDTO addressDTO) {
 
 		AddressDTO addressDto = addressService.create(clientId, addressDTO);
 
-		return ResponseEntity.created(URI.create("/clients/" + addressDto.getId() + "/address")).body(addressDto);
+		return ResponseEntity.created(URI.create("/address/" + addressDto.getId())).body(addressDto);
 
 	}
 
 	@GetMapping
-	@ApiOperation(value = "find")
+	@ApiOperation(value = "Find a address from a client")
 	public AddressDTO find(@PathVariable("clientId") Long clientId) {
 		AddressDTO addressDto = addressService.findByClientId(clientId);
 		AddressHateoasUtils.create(addressDto);
@@ -49,8 +49,10 @@ public class AddressController {
 	
 	
 	@PutMapping
+	@ApiOperation(value = "Update a address from a client")
 	public AddressDTO update(@PathVariable("clientId") Long clientId,@RequestBody @Valid AddressDTO adressDto) {
 		AddressDTO updatedAdressDto = addressService.update(clientId,adressDto);
+		AddressHateoasUtils.create(updatedAdressDto);
 		return updatedAdressDto;
 	}
 

@@ -21,7 +21,7 @@ public class NotUnderAgeValidator implements ConstraintValidator<NotUnderAge, Lo
 
 		Period period = Period.between(date, dateNow);
 
-		return !(period.getYears() < 18) ?  true :  false;
+		return period.getYears() >= 18;
 		
 	}
 
