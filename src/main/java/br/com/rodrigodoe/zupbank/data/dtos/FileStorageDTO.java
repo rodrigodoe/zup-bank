@@ -25,8 +25,6 @@ public class FileStorageDTO extends RepresentationModel<FileStorageDTO> implemen
 	private Long id;
 	@JsonIgnore
 	private Client client;
-
-	@NotNull
 	private String filename;
 
 }

@@ -23,24 +23,11 @@ public class AddressDTO extends RepresentationModel<AddressDTO> implements Seria
 
 	@EqualsAndHashCode.Include
 	private Long id;
-
-	@ZipCode
-	@NotNull
 	private String zipcode;
-
-	@NotNull
 	private String addressLine1;
-
-	@NotNull
 	private String addressLine2;
-
-	@NotNull
 	private String suburb;
-
-	@NotNull
 	private String city;
-
-	@NotNull
 	private String state;
 	@JsonIgnore
 	private Client client;

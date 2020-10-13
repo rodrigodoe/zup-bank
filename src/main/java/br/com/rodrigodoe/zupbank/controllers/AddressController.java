@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.rodrigodoe.zupbank.data.dtos.AddressDTO;
+import br.com.rodrigodoe.zupbank.data.forms.AddressForm;
 import br.com.rodrigodoe.zupbank.services.AddressService;
 import br.com.rodrigodoe.zupbank.utils.AddressHateoasUtils;
 import io.swagger.annotations.Api;
@@ -31,9 +32,9 @@ public class AddressController {
 	@PostMapping
 	@ApiOperation(value = "Create a address from a client")
 	public ResponseEntity<?> create(@PathVariable("clientId") Long clientId,
-			@RequestBody @Valid AddressDTO addressDTO) {
+			@RequestBody @Valid AddressForm addressForm) {
 
-		AddressDTO addressDto = addressService.create(clientId, addressDTO);
+		AddressDTO addressDto = addressService.create(clientId, addressForm);
 
 		return ResponseEntity.created(URI.create("/address/" + addressDto.getId())).body(addressDto);
 
@@ -46,12 +47,11 @@ public class AddressController {
 		AddressHateoasUtils.create(addressDto);
 		return addressDto;
 	}
-	
-	
+
 	@PutMapping
 	@ApiOperation(value = "Update a address from a client")
-	public AddressDTO update(@PathVariable("clientId") Long clientId,@RequestBody @Valid AddressDTO adressDto) {
-		AddressDTO updatedAdressDto = addressService.update(clientId,adressDto);
+	public AddressDTO update(@PathVariable("clientId") Long clientId, @RequestBody @Valid AddressForm addressForm) {
+		AddressDTO updatedAdressDto = addressService.update(clientId, addressForm);
 		AddressHateoasUtils.create(updatedAdressDto);
 		return updatedAdressDto;
 	}

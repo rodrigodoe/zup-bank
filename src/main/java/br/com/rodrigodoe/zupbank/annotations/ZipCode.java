@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import br.com.rodrigodoe.zupbank.validations.CepValidator;
+import br.com.rodrigodoe.zupbank.validations.ZipCodeValidator;
 
-@Constraint(validatedBy = CepValidator.class)
+@Constraint(validatedBy = ZipCodeValidator.class)
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

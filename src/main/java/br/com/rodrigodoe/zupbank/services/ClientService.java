@@ -3,16 +3,19 @@ package br.com.rodrigodoe.zupbank.services;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
+import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
 import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.exceptions.MyUnprocessableEntityException;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
-import br.com.rodrigodoe.zupbank.utils.ClassConverterUtils;
+import br.com.rodrigodoe.zupbank.utils.ClassConverterBuilder;
 
 @Service
 public class ClientService {
@@ -20,20 +23,20 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	public ClientDTO create(ClientDTO clientDto) {
+	public ClientDTO create(@Valid ClientForm clientForm) {
 
 		try {
 
-			var client = ClassConverterUtils.convert(clientDto, Client.class);
+			var client = ClassConverterBuilder.build(clientForm, Client.class);
 
-			var existingClient = clientRepository.findByEmail(clientDto.getEmail());
+			var existingClient = clientRepository.findByEmail(clientForm.getEmail());
 
 			if (existingClient != null) {
 				throw new DuplicateConstraintException("Email existente no banco de dados!");
 			}
 
 			Client newClient = clientRepository.save(client);
-			return ClassConverterUtils.convert(newClient, ClientDTO.class);
+			return ClassConverterBuilder.build(newClient, ClientDTO.class);
 
 		} catch (DateTimeParseException e) {
 			throw new RuntimeException("Formato de data invalida");
@@ -43,14 +46,14 @@ public class ClientService {
 
 	public List<ClientDTO> findAll() {
 		List<Client> clients = this.clientRepository.findAll();
-		return ClassConverterUtils.convertList(clients, ClientDTO.class);
+		return ClassConverterBuilder.buildList(clients, ClientDTO.class);
 	}
 
 	public ClientDTO findById(Long id) {
 		var client = clientRepository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
 
-		return ClassConverterUtils.convert(client, ClientDTO.class);
+		return ClassConverterBuilder.build(client, ClientDTO.class);
 	}
 
 	public Client findEntityById(Long id) {
@@ -59,14 +62,14 @@ public class ClientService {
 		return client;
 	}
 
-	public ClientDTO update(Long id, ClientDTO clientDto) {
+	public ClientDTO update(Long id, @Valid ClientForm clientForm) {
 		var client = findEntityById(id);
-		client.setCpf(clientDto.getCpf());
-		client.setBirthDay(clientDto.getBirthDay());
-		client.setEmail(clientDto.getEmail());
-		client.setFirstName(clientDto.getFirstName());
-		client.setLastName(clientDto.getLastName());
-		return ClassConverterUtils.convert(clientRepository.save(client), ClientDTO.class);
+		client.setCpf(clientForm.getCpf());
+		client.setBirthDay(clientForm.getBirthDay());
+		client.setEmail(clientForm.getEmail());
+		client.setFirstName(clientForm.getFirstName());
+		client.setLastName(clientForm.getLastName());
+		return ClassConverterBuilder.build(clientRepository.save(client), ClientDTO.class);
 	}
 
 	public void delete(Long id) {
@@ -78,7 +81,7 @@ public class ClientService {
 		Client enttiy = this.clientRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Proposta nao encontrada"));
 
-		ClientDTO dto = ClassConverterUtils.convert(enttiy, ClientDTO.class);
+		ClientDTO dto = ClassConverterBuilder.build(enttiy, ClientDTO.class);
 
 		if (dto.getAddress() == null) {
 			throw new MyUnprocessableEntityException("Endereco nao cadastrado na proposta!");

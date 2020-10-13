@@ -7,7 +7,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import br.com.rodrigodoe.zupbank.annotations.ZipCode;
 
-public class CepValidator implements ConstraintValidator<ZipCode, String>{
+public class ZipCodeValidator implements ConstraintValidator<ZipCode, String>{
 	
 	private Pattern pattern = 
 	          Pattern.compile("[0-9]{5}-[0-9]{3}");

@@ -15,7 +15,7 @@ import br.com.rodrigodoe.zupbank.data.models.FileStorage;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
 import br.com.rodrigodoe.zupbank.repositories.FileStorageRepository;
 import br.com.rodrigodoe.zupbank.services.api.S3Services;
-import br.com.rodrigodoe.zupbank.utils.ClassConverterUtils;
+import br.com.rodrigodoe.zupbank.utils.ClassConverterBuilder;
 
 @Service
 public class FileStoreService {
@@ -47,7 +47,7 @@ public class FileStoreService {
 
 			fs.setClient(client);
 			fs.setFilename(filename);
-			FileStorageDTO dto = ClassConverterUtils.convert(fileStorageRepository.save(fs), FileStorageDTO.class);
+			FileStorageDTO dto = ClassConverterBuilder.build(fileStorageRepository.save(fs), FileStorageDTO.class);
 			return dto;
 
 		} catch (IOException e) {
@@ -59,7 +59,7 @@ public class FileStoreService {
 	public FileStorageDTO findByClientId(Long clientId) {
 		FileStorage file = this.fileStorageRepository.findByClientId(clientId)
 				.orElseThrow(() -> new ResourceNotFoundException("Nenhum arquivo encontrado"));
-		return ClassConverterUtils.convert(file, FileStorageDTO.class);
+		return ClassConverterBuilder.build(file, FileStorageDTO.class);
 	}
 
 	public ByteArrayOutputStream findByFileName(Long clientId, String filename) {

@@ -24,7 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value = "File Endpoint", tags = { "files", "bucket" })
+@Api(value = "File Endpoint", tags = { "Files"})
 @RequestMapping("/file/{clientId}")
 public class BucketController {
 

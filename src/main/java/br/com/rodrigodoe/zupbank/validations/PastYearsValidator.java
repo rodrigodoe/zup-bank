@@ -7,9 +7,9 @@ import java.time.Period;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import br.com.rodrigodoe.zupbank.annotations.NotUnderAge;
+import br.com.rodrigodoe.zupbank.annotations.PastYears;
 
-public class NotUnderAgeValidator implements ConstraintValidator<NotUnderAge, LocalDate>{
+public class PastYearsValidator implements ConstraintValidator<PastYears, LocalDate>{
 
 	
 	@Override
