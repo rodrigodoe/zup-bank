@@ -1,19 +1,26 @@
 package br.com.rodrigodoe.zupbank.validators;
 
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 import org.junit.jupiter.api.DisplayName;
+
+import com.mysql.cj.exceptions.AssertionFailedException;
 
 import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
 
@@ -25,15 +32,6 @@ public class ConstraintsValidatorTests {
 	public void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
-	}
-
-	@Test
-	@DisplayName("Should validate constraint violations")
-	public void testClientFormFail() {
-		ClientForm form = new ClientForm();
-		form.setCpf("06234132480");
-		Set<ConstraintViolation<ClientForm>> violations = validator.validate(form);
-		assertFalse(violations.isEmpty());
 	}
 
 	@Test
