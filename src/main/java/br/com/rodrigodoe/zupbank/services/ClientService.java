@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.sendgrid.Response;
+
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
 import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.exceptions.MyUnprocessableEntityException;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
+import br.com.rodrigodoe.zupbank.services.api.SendGridService;
 import br.com.rodrigodoe.zupbank.utils.ClassConverterBuilder;
 
 @Service
@@ -22,6 +25,9 @@ public class ClientService {
 
 	@Autowired
 	private ClientRepository clientRepository;
+
+	@Autowired
+	private SendGridService sgService;
 
 	public ClientDTO create(@Valid ClientForm clientForm) {
 
@@ -95,9 +101,10 @@ public class ClientService {
 
 	}
 
-	public ClientDTO confirm(Long id) {
+	public Response confirm(Long id) {
 		ClientDTO dto = this.validade(id);
-		return dto;
+		return sgService.sendMailConfirmation("rrodgcar@gmail.com", dto.getEmail());
+
 	}
 
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sendgrid.Response;
+
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
 import br.com.rodrigodoe.zupbank.services.ClientService;
@@ -35,7 +37,7 @@ public class ClientController {
 	@ApiOperation(value = "Create a client Proposal")
 	public ResponseEntity<?> create(@RequestBody @Valid ClientForm clientForm) {
 
-		ClientDTO client = clientService.create(clientForm);
+		ClientDTO client = this.clientService.create(clientForm);
 
 		ClientHateoasUtils.create(client);
 
@@ -54,7 +56,7 @@ public class ClientController {
 	@GetMapping(value = "/{id}")
 	@ApiOperation(value = "Find a client proposal by client id")
 	public ClientDTO findByid(@PathVariable("id") Long id) {
-		ClientDTO clientDTO = clientService.findById(id);
+		ClientDTO clientDTO = this.clientService.findById(id);
 		ClientHateoasUtils.create(clientDTO);
 		return clientDTO;
 	}
@@ -62,7 +64,7 @@ public class ClientController {
 	@PutMapping(value = "/{id}")
 	@ApiOperation(value = "updates a client proposal by client id")
 	public ClientDTO update(@PathVariable("id") Long id, @RequestBody @Valid ClientForm clientForm) {
-		ClientDTO updatedClientDto = clientService.update(id, clientForm);
+		ClientDTO updatedClientDto = this.clientService.update(id, clientForm);
 		ClientHateoasUtils.create(updatedClientDto);
 		return updatedClientDto;
 	}
@@ -70,24 +72,23 @@ public class ClientController {
 	@DeleteMapping(value = "/{id}")
 	@ApiOperation(value = "Deletes a client proposal by  client id")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-		clientService.delete(id);
+		this.clientService.delete(id);
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping(value = "/{id}/validate")
 	@ApiOperation(value = "Validates a client proposal by client id")
 	public ClientDTO validade(@PathVariable("id") Long id) {
-		ClientDTO dto = clientService.validade(id);
+		ClientDTO dto = this.clientService.validade(id);
 		ClientHateoasUtils.create(dto);
 		return dto;
 	}
 
 	@GetMapping(value = "/{id}/confirm")
 	@ApiOperation(value = "Confirms a client proposal by client id")
-	public ClientDTO confirm(@PathVariable("id") Long id) {
-		ClientDTO dto = clientService.confirm(id);
-		ClientHateoasUtils.create(dto);
-		return dto;
+	public ResponseEntity<?> confirm(@PathVariable("id") Long id) {
+		this.clientService.confirm(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
