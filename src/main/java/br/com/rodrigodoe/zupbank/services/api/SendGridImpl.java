@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -13,7 +14,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
-
+@Service
 public class SendGridImpl implements SendGridService {
 
 	private Logger logger = LoggerFactory.getLogger(SendGridImpl.class);

@@ -34,7 +34,7 @@ import br.com.rodrigodoe.zupbank.utils.ClassConverterBuilder;
 @WebMvcTest
 public class ClientControllerTests {
 
-	private final String VALID_CLIENT = "{\n\"firstName\": \"Rodrigo\",\n \"birthDay\":\"2001-06-18\",\n \"lastName\": \"Carvalho\",\n	\"cpf\": \"91115434004\",\n  \"email\": \"a@a.com\"\n }";
+	private final String VALID_CLIENT = "{\n\"firstName\": \"Rodrigo\",\n \"birthDay\":\"2001-06-18\",\n \"lastName\": \"Carvalho\",\n	\"cpf\": \"91115434004\",\n  \"email\": \"aaa@aaa.com\"\n }";
 
 	@Autowired
 	private MockMvc mockMVC;
