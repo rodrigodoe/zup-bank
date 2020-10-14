@@ -9,8 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import br.com.rodrigodoe.zupbank.builder.ClientBuilder;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
+import br.com.rodrigodoe.zupbank.data.models.Client;
 import br.com.rodrigodoe.zupbank.services.AddressService;
 import br.com.rodrigodoe.zupbank.services.ClientService;
 import br.com.rodrigodoe.zupbank.services.FileStoreService;
@@ -52,9 +51,9 @@ public class ClientControllerTests {
 	@DisplayName("Should create a client and return status 201")
 	public void createAclientSucess() throws Exception {
 
-		ClientDTO dto = ClientBuilder.build();
-		ClientForm form = ClassConverterBuilder.build(dto, ClientForm.class);
-		when(this.clientService.create(form)).thenReturn(dto);
+		Client entity = ClientBuilder.buildClient();
+		ClientDTO dto = ClassConverterBuilder.build(entity, ClientDTO.class);
+		when(this.clientService.create(new ClientForm())).thenReturn(dto);
 
 		this.mockMVC
 				.perform(post("/clients").content(VALID_CLIENT).header(HttpHeaders.CONTENT_TYPE,

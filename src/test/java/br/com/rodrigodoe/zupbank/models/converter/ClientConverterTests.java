@@ -3,7 +3,6 @@ package br.com.rodrigodoe.zupbank.models.converter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.Assert;
-import org.junit.Before;
 
 import br.com.rodrigodoe.zupbank.builder.ClientBuilder;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
@@ -18,6 +17,10 @@ public class ClientConverterTests {
 		Client client = ClientBuilder.buildClient();
 		ClientDTO DTO = ClassConverterBuilder.build(client, ClientDTO.class);
 		Assert.assertEquals(client.getId(), DTO.getId());
+		Assert.assertEquals(client.getEmail(), DTO.getEmail());
+		Client convertedClient = ClassConverterBuilder.build(DTO, Client.class);
+	    Assert.assertEquals(convertedClient.getCpf(), DTO.getCpf());
+
 	}
 
 }

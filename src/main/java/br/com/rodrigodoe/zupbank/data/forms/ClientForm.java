@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -20,20 +20,18 @@ public class ClientForm implements Serializable {
 
 	private static final long serialVersionUID = 2012963711330474199L;
 
-	@NotNull
-	@NotBlank
+	@NotEmpty
 	private String firstName;
-	@NotNull
-	@NotBlank
+	@NotEmpty
 	private String lastName;
 	@Email
-	@NotNull
+	@NotEmpty
 	private String email;
-	@NotNull
-	@DateTimeFormat(pattern = "dd-mm-yyyy")
 	@PastYears
-	private LocalDate birthDay;
 	@NotNull
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate birthDay;
+	@NotEmpty
 	@CPF
 	private String cpf;
 
