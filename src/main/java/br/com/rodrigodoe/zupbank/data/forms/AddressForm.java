@@ -29,4 +29,7 @@ public class AddressForm implements Serializable {
 
 	@NotNull
 	private String city;
+	
+	@NotNull
+	private String state;
 }
