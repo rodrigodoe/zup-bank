@@ -14,6 +14,7 @@ import com.sendgrid.Response;
 import br.com.rodrigodoe.zupbank.data.dtos.ClientDTO;
 import br.com.rodrigodoe.zupbank.data.forms.ClientForm;
 import br.com.rodrigodoe.zupbank.data.models.Client;
+import br.com.rodrigodoe.zupbank.enums.ClientStatus;
 import br.com.rodrigodoe.zupbank.exceptions.DuplicateConstraintException;
 import br.com.rodrigodoe.zupbank.exceptions.MyUnprocessableEntityException;
 import br.com.rodrigodoe.zupbank.repositories.ClientRepository;
@@ -101,9 +102,15 @@ public class ClientService {
 
 	}
 
-	public Response confirm(Long id) {
+	public String confirm(Long id) {
 		ClientDTO dto = this.validade(id);
-		return sgService.sendMailConfirmation("rrodgcar@gmail.com", dto.getEmail());
+		sgService.sendMailConfirmation(dto.getEmail());
+		Client client = clientRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Nenhum registro encontrado para o cliente informado"));
+		client.setStatus(ClientStatus.ACTIVE);
+		clientRepository.save(client);
+		return client.getFirstName()
+				+ ". Parabéns, dados registrados com sucesso, em breve voce receberá um e-mail com mais instrucoes";
 
 	}
 

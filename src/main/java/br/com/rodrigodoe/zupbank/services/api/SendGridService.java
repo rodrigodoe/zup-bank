@@ -5,6 +5,6 @@ import com.sendgrid.helpers.mail.objects.Email;
 
 public interface SendGridService {
 
-	public Response sendMailConfirmation(String fromMail, String String);
+	public Response sendMailConfirmation(String toEmail);
 
 }

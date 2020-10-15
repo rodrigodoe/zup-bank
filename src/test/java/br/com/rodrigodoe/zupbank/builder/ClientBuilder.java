@@ -15,7 +15,7 @@ public class ClientBuilder {
 		dto.setFirstName("RODRIGO");
 		dto.setLastName("CARVALHO");
 		dto.setBirthDay(LocalDate.parse("2001-06-18"));
-		dto.setCpf("06234132480");
+		dto.setCpf("53009314035");
 		dto.setEmail("aaa@aaa.com");
 		lista.add(dto);
 		return lista;
@@ -27,7 +27,7 @@ public class ClientBuilder {
 		client.setFirstName("RODRIGO");
 		client.setLastName("CARVALHO");
 		client.setBirthDay(LocalDate.parse("2001-06-18"));
-		client.setCpf("06234132480");
+		client.setCpf("53009314035");
 		client.setEmail("aaa@aaa.com");
 		return client;
 	}

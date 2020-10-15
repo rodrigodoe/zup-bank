@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.sendgrid.Method;
@@ -14,6 +15,7 @@ import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
+
 @Service
 public class SendGridImpl implements SendGridService {
 
@@ -22,14 +24,17 @@ public class SendGridImpl implements SendGridService {
 	@Autowired
 	private SendGrid sendGrind;
 
-	public Response sendMailConfirmation(String fromMail, String toMail) {
+	@Value("${SENDGRID.SENDER.EMAIL}")
+	private String SG_SENDER;
+
+	public Response sendMailConfirmation(String toMail) {
 		String subject = "Parabéns você acaba de se tornar mais um cliente no nosso serviço";
 		Content content = new Content("text/plain",
 				"Obrigado por aceitar a proposta em breve você receberá informacoes sobre sua conta");
 		Request request = new Request();
 		request.setMethod(Method.POST);
 		request.setEndpoint("mail/send");
-		Mail mail = new Mail(new Email(fromMail), subject, new Email(toMail), content);
+		Mail mail = new Mail(new Email(SG_SENDER), subject, new Email(toMail), content);
 		try {
 			request.setBody(mail.build());
 			Response response = sendGrind.api(request);

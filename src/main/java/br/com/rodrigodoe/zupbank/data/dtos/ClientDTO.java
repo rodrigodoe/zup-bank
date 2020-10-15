@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import br.com.rodrigodoe.zupbank.enums.ClientStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,5 +31,7 @@ public class ClientDTO extends RepresentationModel<ClientDTO> implements Seriali
 	private AddressDTO address;
 	@JsonIgnore
 	private FileStorageDTO file;
+
+	private ClientStatus status;
 
 }

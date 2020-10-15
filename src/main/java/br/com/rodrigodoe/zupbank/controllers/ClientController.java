@@ -84,11 +84,10 @@ public class ClientController {
 		return dto;
 	}
 
-	@GetMapping(value = "/{id}/confirm")
+	@PostMapping(value = "/{id}/confirm")
 	@ApiOperation(value = "Confirms a client proposal by client id")
 	public ResponseEntity<?> confirm(@PathVariable("id") Long id) {
-		this.clientService.confirm(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(this.clientService.confirm(id));
 	}
 
 }

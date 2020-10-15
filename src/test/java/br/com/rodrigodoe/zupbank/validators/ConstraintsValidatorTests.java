@@ -38,7 +38,7 @@ public class ConstraintsValidatorTests {
 	@DisplayName("Should validate successful form")
 	public void testClientSuccess() {
 		ClientForm form = new ClientForm();
-		form.setCpf("06234132480");
+		form.setCpf("53009314035");
 		form.setBirthDay(LocalDate.parse("2001-06-18"));
 		form.setEmail("aaa@aaa.com");
 		form.setFirstName("RODRIGO");
@@ -63,7 +63,7 @@ public class ConstraintsValidatorTests {
 	@DisplayName("Should validate email")
 	public void validateEMAIL() {
 		ClientForm form = new ClientForm();
-		form.setCpf("06234132480");
+		form.setCpf("53009314035");
 		form.setBirthDay(LocalDate.parse("2001-06-18"));
 		form.setFirstName("RODRIGO");
 		form.setLastName("CARVALHO");
@@ -75,7 +75,7 @@ public class ConstraintsValidatorTests {
 	@DisplayName("Should validate age")
 	public void validadeValidAge() {
 		ClientForm form = new ClientForm();
-		form.setCpf("06234132480");
+		form.setCpf("53009314035");
 		form.setBirthDay(LocalDate.parse("2003-06-18"));
 		form.setEmail("aa@aaa.com");
 		form.setFirstName("RODRIGO");

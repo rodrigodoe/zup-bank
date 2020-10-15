@@ -2,14 +2,18 @@ package br.com.rodrigodoe.zupbank.data.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import br.com.rodrigodoe.zupbank.enums.ClientStatus;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import net.bytebuddy.agent.builder.AgentBuilder.ClassFileBufferStrategy.Default;
 
 @Entity
 @Getter
@@ -42,5 +46,6 @@ public class Address {
 
 	@OneToOne
 	private Client client;
+
 
 }
