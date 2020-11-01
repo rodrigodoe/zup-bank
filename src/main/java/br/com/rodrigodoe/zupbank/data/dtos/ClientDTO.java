@@ -33,5 +33,7 @@ public class ClientDTO extends RepresentationModel<ClientDTO> implements Seriali
 	private FileStorageDTO file;
 
 	private ClientStatus status;
+	
+	
 
 }
